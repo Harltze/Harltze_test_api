@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="file" id="file_" multiple="true">
+    </div>
+
+    <button onclick="upload()">Upload</button>
+
+    <script>
+        const files = document.getElementById("file_");
+
+        async function upload() {
+
+            const formData = new FormData();
+
+            formData.append("files", files.files);
+
+            const response = await fetch("https://api.betatenant.com/v1/user/upload-files", {
+                headers: {
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1mcmVrZS52aWN0b3JAZ21haWwuY29tIiwidXNlcklkIjoiNjcwOTBhNjlhZTU1MGIzMmQ0NDU2ZjdiIiwiZnVsbE5hbWUiOiJWaWN0b3IgUGV0ZXIiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTcyODg1MiwiZXhwIjoxNzI5OTg4MDUyfQ.0yXvSUbvZ39WFmf5dqzpTVjckuh-Lgw16U5H7fiZzOI"
+                },
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+        }
+
+    </script>
+
+</body>
+</html>

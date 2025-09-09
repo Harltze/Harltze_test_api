@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button onclick="pay()">Pay</button>
+
+    <script src="https://js.paystack.co/v2/inline.js"></script>
+    <script>
+        async function pay() {
+
+            const response = await fetch("https://api.betatenant.com/v1/user/create-order", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1mcmVrZS52aWN0b3JAZ21haWwuY29tIiwidXNlcklkIjoiNjcwOTBhNjlhZTU1MGIzMmQ0NDU2ZjdiIiwiZnVsbE5hbWUiOiJWaWN0b3IgUGV0ZXIiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyODkzNjYxMSwiZXhwIjoxNzI5MTk1ODExfQ.Q3ZAPW3xxhQWAN56WuvOLPIJEHw6l8efN6-KRhmfk94"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    propertyId: "6703f619bf714e6cf641114f",
+                    amountPaid: 26500000
+                })
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            // console.log(data.paystackResponse.data.access_code);
+
+            const popup = new PaystackPop();
+            popup.resumeTransaction(data.paystackResponse.data.access_code);
+
+        }
+    </script>
+</body>
+</html>
